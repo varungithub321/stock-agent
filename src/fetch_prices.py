@@ -47,12 +47,13 @@ def _print_human(results):
 
 def _cli():
     parser = argparse.ArgumentParser(prog="fetch_prices.py", description="Fetch latest stock prices")
-    parser.add_argument("-t", "--tickers", help="Comma-separated tickers (default: AAPL,NVDA,GOOGL,TSLA,IBIT)",
-                        default="AAPL,NVDA,GOOGL,TSLA,IBIT")
+    parser.add_argument("tickers", help="Comma-separated list of stock tickers (e.g., AAPL,MSFT,GOOGL)")
     parser.add_argument("--json", help="Print JSON output", action="store_true")
     args = parser.parse_args()
 
-    tickers = [t.strip() for t in args.tickers.split(",") if t.strip()]
+    tickers = [t.strip().upper() for t in args.tickers.split(",") if t.strip()]
+    if not tickers:
+        parser.error("Please provide at least one ticker symbol")
     results = get_stock_data(tickers)
     if args.json:
         print(json.dumps(results, indent=2))
