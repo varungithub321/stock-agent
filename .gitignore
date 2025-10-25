@@ -1,0 +1,10 @@
+venv/
+.env
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Mac system files
+.DS_Store
